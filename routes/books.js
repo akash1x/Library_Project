@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Book = require("../models/book");
 const Author = require("../models/author");
-const imageMimeTypes = ["images/jpeg", "images/png", "images/gif"];
+const imageMimeTypes = ["image/jpeg", "image/png", "image/gif"];
 
 //All Books
 //Route authors/ since it is already prepended in server.js there fore only / will work

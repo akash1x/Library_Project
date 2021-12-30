@@ -7,6 +7,7 @@ const app = express();
 const expressLayouts = require("express-ejs-layouts");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const methodOverride = require("method-override");
 
 //Routes path
 const indexRouter = require("./routes/index");
@@ -27,9 +28,9 @@ app.use(expressLayouts);
 app.use(express.static("public"));
 
 app.use(bodyParser.urlencoded({ limit: "10mb", extended: false }));
+app.use(methodOverride("_method")); //_method will be the attr name in the forms to specify the type of request
 
 //Setting up the database
-
 mongoose
   .connect(process.env.DATABASE_URL)
   .then(() => console.log("DB connected"))
