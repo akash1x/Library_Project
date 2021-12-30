@@ -1,6 +1,7 @@
 <h2>New Book</h2>
-<!-- enctype="multipart/form-data" : tells our server our form will be sending multi part data which could include a file -->
-<form action="/books" method="POST" enctype="multipart/form-data">
+<!-- enctype="multipart/form-data" : tells our server our form will be sending multi part data which could include a file which used by multwe -->
+<!-- if we are using filepond not required. Since we will be uploading single string as json object for image  -->
+<form action="/books" method="POST">
   <%- include('_form_fields.ejs') %>
   <a href="/books">Cancel</a>
   <button type="submit">Submit</button>

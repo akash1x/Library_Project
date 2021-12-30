@@ -1,7 +1,4 @@
 const mongoose = require("mongoose");
-const path = require("path");
-
-const coverImageBasePath = "uploads/bookCovers";
 
 const bookSchema = new mongoose.Schema({
   title: {
@@ -24,7 +21,12 @@ const bookSchema = new mongoose.Schema({
     required: true,
     default: Date.now,
   },
-  coverImageName: {
+  coverImage: {
+    type: Buffer, // Buffer of data representing our entire image
+    required: true,
+  },
+  //Specifying the types of image allowed
+  coverImageType: {
     type: String,
     required: true,
   },
@@ -40,12 +42,13 @@ const bookSchema = new mongoose.Schema({
 //model but it will actually derive it's value from the existing one.
 //.get() : whenever will will call book.coverImagePath it will executed the get() internally
 bookSchema.virtual("coverImagePath").get(function () {
-  if (this.coverImageName != null) {
-    return path.join("/", coverImageBasePath, this.coverImageName);
+  if (this.coverImage != null && this.coverImageType != null) {
+    return `data:${
+      this.coverImageType
+    }; charset=utf-8, base64, ${this.coverImage.toString("base64")}`; //data object that we can we for src for images. It allows us to take buffer data and use it for an actual source for the image
   }
 });
 
 //'Book' will be the name of the table inside our database
 module.exports = mongoose.model("Book", bookSchema);
 //Below is export by giving name, and above is how we export default
-module.exports.coverImageBasePath = coverImageBasePath;
